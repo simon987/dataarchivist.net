@@ -1,0 +1,10 @@
+baseURL = "https://dataarchivist.net"
+languageCode = "en-us"
+title = "Data Archivist Weekly"
+theme = "whiteplain"
+
+pygmentsStyle = "friendly"
+
+[params]
+useCDN = false
+showShareIcons = false
