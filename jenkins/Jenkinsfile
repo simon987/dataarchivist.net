@@ -1,0 +1,40 @@
+def remote = [:]
+remote.name = 'remote'
+remote.host = env.DEPLOY_HOST
+remote.user = env.DEPLOY_USER
+remote.identityFile = '/var/lib/jenkins/.ssh/id_rsa'
+remote.knownHosts = '/var/lib/jenkins/.ssh/known_hosts'
+remote.allowAnyHosts = true
+remote.retryCount = 3
+remote.retryWaitSec = 3
+logLevel = 'FINER'
+
+pipeline {
+    agent none
+    environment {
+        HOME='.'
+    }
+    stages {
+        stage('Build') {
+            agent none
+            steps {
+                sh 'git submodule init && git submodule update --remote'
+                sh 'hugo && mv public/ webroot/'
+                stash includes: 'webroot/', name: 'webdist'
+            }
+        }
+        stage('Deploy') {
+            agent none
+            steps {
+                node('master') {
+                    unstash 'webdist'
+                    sshCommand remote: remote, command: "cd 'dataarchivist.net' && rm -rf webroot/* deploy.sh"
+                    sshPut remote: remote, from: 'webroot/', into: 'dataarchivist.net'
+                    sshCommand remote: remote, command: 'chmod -R 755 dataarchivist.net'
+                }
+            }
+        }
+    }
+}
+
+
