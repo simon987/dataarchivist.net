@@ -1,0 +1,17 @@
+
+<div class="site-footer">
+  <div class="copyright">{{ .Site.Copyright | safeHTML }}</div>
+  <ul class="site-footer-items">
+    {{- with .OutputFormats.Get "RSS" }}
+    <li class="site-footer-item-rsslink">
+      <a href="{{ .RelPermalink }}" type="application/rss+xml" target="_blank" title="RSS">
+        <i class="fas fa-rss"></i>
+      </a>
+    </li>
+    {{- end }}
+        {{- range .Site.Menus.footer }}
+    <li class="site-footer-item-{{ .Identifier }}"><a href="{{ .URL | safeURL }}" title="{{ .Name }}">{{ .Name }}</a></li>
+    {{- end }}
+  </ul>
+</div>
+{{ template "_internal/google_analytics.html" . }}

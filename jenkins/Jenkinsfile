@@ -16,15 +16,17 @@ pipeline {
     }
     stages {
         stage('Build') {
-            agent none
             steps {
-                sh 'git submodule init && git submodule update --remote'
-                sh 'hugo && mv public/ webroot/'
-                stash includes: 'webroot/', name: 'webdist'
+                node('master') {
+                    checkout scm
+                    sh 'git submodule init && git submodule update --remote'
+                    sh 'hugo && mv public/ webroot/'
+                    stash includes: 'webroot/', name: 'webdist'
+                }
             }
         }
+            
         stage('Deploy') {
-            agent none
             steps {
                 node('master') {
                     unstash 'webdist'
@@ -36,5 +38,4 @@ pipeline {
         }
     }
 }
-
 
