@@ -1,10 +1,26 @@
-baseURL = "https://dataarchivist.net"
+baseURL = "https://dataarchivist.net/"
 languageCode = "en-us"
 title = "Data Archivist Weekly"
-theme = "whiteplain"
+theme = "temple"
 
 pygmentsStyle = "friendly"
 
 [params]
 useCDN = false
 showShareIcons = false
+
+toc = true
+custom_css = ["static/custom.css"]
+dateformatpretty = "2006-01-02"
+pygmentsCodeFences = true
+
+
+
+# Builds a list page for each category given
+[taxonomies]
+  tag = "tags"
+
+[author]
+  name = "simon987"
+  github = "simon987"
+  email = "me@simon987.net"
