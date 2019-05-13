@@ -6,15 +6,13 @@ tags: ["youtube-dl", "automation"]
 ---
 
 Google has been known to terminate entire Youtube channels without 
-notice in the hope of staying advertiser friendly. **58 million "problematic" videos
+notice in the hope of staying advertiser-friendly. **58 million "problematic" videos
 were deleted from the platform in Q3 2018** <sup>[1](#sources)</sup>.
 This week we are exploring various Youtube archival solutions that utilizes
  [youtube-dl](https://github.com/ytdl-org/youtube-dl/),
- a command-line program that extracts and downloads videos from web pages.
+ a command-line program that extracts and download videos from web pages.
 
 {{< figure src="/ytdl/1.png" title="Channels removed, by removal reason">}}
-
-
 
 # Installation
 
@@ -52,11 +50,11 @@ yt_dl.download("https://www.youtube.com/watch?v=XXXXXXXXXXXX")
 ## Command line arguments & Scripting
 
 This document is not a replacement for youtube-dl’s documentation, you can find the
-updated list of command line arguments on its [Github page](https://github.com/ytdl-org/youtube-dl/).
+updated list of command-line arguments on its [Github page](https://github.com/ytdl-org/youtube-dl/).
 
 Below is a bash script that will download everything specified in `list.txt`, a text file
 with a youtube channel or video on each line. The script will save the URLs of the videos
-in archive.txt as it downloads them to speed-up the subsequent executions.
+in archive.txt as it downloads them to speedup the subsequent executions.
 The `--write-info-json` and `--write-thumbnail` options ensures that we also download
 the video metadata such as the description and the title.
 
@@ -84,15 +82,15 @@ crontab -e
 
 ## Live streams
 
-While a cron job will download all videos uploaded by a channel (if the uploader does
+While a cron job downloads all videos uploaded by a channel (if the uploader does
 not delete the video between executions), it does not handle live streams. Youtube-dl
 allows you to download live streams with the same command but you obviously have to
 start the execution during the stream.
 Below is a different approach that takes advantage of the Youtube email notification
-feature. This simple Python script reads your last 3 emails and searches for a youtube
+feature. This simple Python script reads your last 3 emails and searches for a Youtube
 link in the email body. It will immediately start downloading the video using the youtube-dl
 Python library. You can use this method to download uploaded videos as well as live
-streams. If you are using a gmail account, you will need to genrate an [App Password](https://security.google.com/settings/security/apppasswords)
+streams. If you are using a Gmail account, you will need to generate an [App Password](https://security.google.com/settings/security/apppasswords)
  to allow the script to login.
 
 {{<highlight python "linenos=table">}}
@@ -102,7 +100,7 @@ import imaplib
 import re
 import youtube_dl
 
-# Initalize the youtube-dl downloader, nooverwrites param will
+# Initialize the youtube-dl downloader, nooverwrites param will
 # skip videos that are already downloaded or 
 # currently being downloaded
 yt_dl = youtube_dl.YoutubeDL(params={
@@ -111,7 +109,7 @@ yt_dl = youtube_dl.YoutubeDL(params={
     "format": "bestvideo[ext=webm]+bestaudio[ext=webm]/bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/best"
     })
 
-# This regex pattern matches youtube video links
+# This regex pattern matches Youtube video links
 YT_LINK = re.compile("Fv%3D([^%]*)%")
 
 mail = imaplib.IMAP4_SSL("imap.gmail.com")
@@ -138,14 +136,14 @@ for num in last_emails:
 ## Automatically upload to rclone remote
 
 To take advantage of cloud storage, you can setup [ytdlrc](http://github.com/bardisty/ytdlrc) to automatically move
-videos to an rclone remote as they are downloaded. This simple script is completely interchangable with
-youtube-dl and can be setup on a machine with low disk space.
+videos to an rclone remote as they are downloaded. This simple script is completely interchangeable with
+youtube-dl and can be set up on a machine with low disk space.
 The script uses your existing youtube-dl and rclone configuration and is ideal for
 setting up automatic Youtube archival on a cheap VPS.
 
 ## Archiving Metadata
 
-If you wish to save a video’s metadata without downloading the actual video, there are command line utilities dedicated to this task.
+If you wish to save a video’s metadata without downloading the actual video, there are command-line utilities dedicated to this task.
 
 * [Youtube-MA](https://github.com/CorentinB/YouTube-MA)
 * [yt-mango](https://github.com/terorie/yt-mango)

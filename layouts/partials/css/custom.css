@@ -271,3 +271,21 @@ code, kbd, pre, samp {
 		display: block;
 	}
 }
+
+.box {
+	border: 1px solid black;
+	border-radius: 2px;
+	box-shadow: 2px 2px 1px rgba(0,0,0,0.4);
+	padding: 4px;
+	margin-right: 3px;
+}
+
+.box .box-title {
+	font-weight: bold;
+	margin: 0.3em 0 0.6em;
+}
+
+figcaption h4 {
+	margin-top: 0.3em;
+	font-size: inherit !important;
+}
