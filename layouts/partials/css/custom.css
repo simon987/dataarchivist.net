@@ -308,3 +308,7 @@ hr {
 .pure-menu-link {
 	color: #E0E0E0;
 }
+
+figure {
+	text-align: center;
+}
