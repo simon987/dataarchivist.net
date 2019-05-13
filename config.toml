@@ -3,14 +3,13 @@ languageCode = "en-us"
 title = "Data Archivist Weekly"
 theme = "temple"
 
-pygmentsStyle = "friendly"
+pygmentsStyle = "native"
 
 [params]
 useCDN = false
 showShareIcons = false
 
 toc = true
-custom_css = ["static/custom.css"]
 dateformatpretty = "2006-01-02"
 pygmentsCodeFences = true
 
