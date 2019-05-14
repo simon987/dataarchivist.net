@@ -1,6 +1,7 @@
 ---
 title: "Web Scraping 101: E-Reader app"
 date: 2019-05-13T10:46:34-04:00
+tags: ["scraping"]
 draft: false
 ---
 
@@ -20,13 +21,14 @@ So, individual pdf pages are being read from this `getpdfpage` endpoint, rendere
 every time you flip a page in the app.
 
 This is what is sent to the endpoint:
-```
+
+{{<highlight javascript >}}
 globalbookid: "<hash>"
 pdfpage: "<hash>.pdf"
 iscover: "N"
 authkey: "<hash>"
 hsid: "<hash>"
-```
+{{</highlight>}}
 
 Obviously, the `globalbookid` is the unique ID of the book I am looking at. `pdfpage` is the ID of the page, there is
 probably a way to get a list of those with another endpoint. `iscover` and `authkey` are self explanatory. So what exactly is
@@ -82,8 +84,8 @@ with open("book.json") as f:
 
 To stitch the pages together, I used `pdfunite`:
 
-```bash
+{{<highlight bash >}}
 pdfunite $(ls -v) output.pdf
-```
+{{</highlight>}}
 
 Now even if you wanted, you *couldn't even buy* a digital version of that book of that quality.
