@@ -7,7 +7,7 @@ author: "simon987"
 ---
 
 Let's say you bought a textbook and it comes with
-an online code that lets you read its online version.
+a code that lets you read its online version.
 
 Of course that online version is tied to your account, it expires in 6 months and
 is not compatible with your tablet browser. So what are you gonna do? Hack together a script
