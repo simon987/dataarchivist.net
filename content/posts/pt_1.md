@@ -3,6 +3,7 @@ title: "Overview Of Private Trackers"
 date: 2019-05-12T21:52:00-04:00
 draft: false
 tags: ["torrents"]
+author: "simon987"
 ---
 
 # Private BitTorrent trackers

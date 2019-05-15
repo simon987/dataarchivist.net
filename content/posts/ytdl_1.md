@@ -3,6 +3,7 @@ title: "Automating Youtube Archival"
 date: 2019-05-11
 draft: false
 tags: ["youtube-dl", "automation"]
+author: "simon987"
 ---
 
 Google has been known to terminate entire Youtube channels without 

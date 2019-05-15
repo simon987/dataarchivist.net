@@ -19,6 +19,9 @@
 		  <a class="post-list" href="{{ .Permalink }}">{{ $page.Title }}</a>
 
       <p class="footnote">
+        {{ with $page.Params.author }}
+			{{ . }},
+        {{ end }}
         <time datetime="{{ $page.Date }}">
           {{ if .Site.Params.dateformatpretty }}
             {{ $page.Date.Format .Site.Params.dateformatpretty }}
@@ -42,7 +45,6 @@
         {{ with $page.Params.series }}
         series: [ {{ range $page.Params.series }}<a href="{{ $baseurl }}series/{{ . | urlize }}/">{{ . }}</a> {{ end }}]
         {{ end }}
-
       </p>
     </li>
     {{ end }}

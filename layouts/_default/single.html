@@ -32,6 +32,9 @@
         {{ end }}
         </p>
         <h1>{{ if .Draft }}DRAFT: {{end}}{{ .Title }}</h1>
+		{{ if isset .Params "author" }}
+		<div class="post-author">by {{ .Params.author }}</divv>
+		{{ end }}
       </div>
 
       <div class="post-content">

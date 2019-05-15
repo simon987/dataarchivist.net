@@ -61,7 +61,6 @@ pre code {
 }
 
 .site-title {
-	text-transform: none;
 	font-weight: normal;
 	font-family: "Source Sans Pro", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -235,7 +234,6 @@ pre code {
 	font-weight: bold;
 	font-size: 39px;
 	line-height: 40px;
-	margin-top: 8px;
 	margin-bottom: 0;
 }
 
@@ -317,4 +315,13 @@ hr {
 
 figure {
 	text-align: center;
+}
+
+.post-author {
+	display: block;
+	font-family: verdana, arial, helvetica, sans-serif;
+	color: #757575;
+	margin-top: -0.1em;
+	margin-left: 2em;
+	margin-bottom: 1em;
 }

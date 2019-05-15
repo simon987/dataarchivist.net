@@ -3,6 +3,7 @@ title: "Web Scraping 101: E-Reader app"
 date: 2019-05-13T10:46:34-04:00
 tags: ["scraping"]
 draft: false
+author: "simon987"
 ---
 
 Let's say you bought a textbook and it comes with
