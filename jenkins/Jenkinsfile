@@ -32,7 +32,7 @@ pipeline {
                     unstash 'webdist'
                     sshCommand remote: remote, command: "cd 'dataarchivist.net' && rm -rf webroot/*"
                     sshPut remote: remote, from: 'webroot/', into: 'dataarchivist.net'
-                    sshCommand remote: remote, command: 'chmod -R 755 dataarchivist.net'
+                    sshCommand remote: remote, command: 'chmod -R 755 dataarchivist.net/webroot/'
                 }
             }
         }
