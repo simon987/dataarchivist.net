@@ -1,6 +1,6 @@
 baseURL = "https://dataarchivist.net/"
 languageCode = "en-us"
-title = "Data Archivist Weekly"
+title = "Data Archivist Periodical"
 theme = "temple"
 
 pygmentsStyle = "native"
