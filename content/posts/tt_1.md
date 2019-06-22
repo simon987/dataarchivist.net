@@ -2,11 +2,14 @@
 title: "Web scraping with task_tracker"
 date: 2019-06-14T14:31:42-04:00
 draft: true
+tags: ["scraping", "task_tracker"]
 author: simon987
 ---
 
+I built a tool to simplify long-running scraping tasks processes. **task_tracker** is a simple job queue
+with a web frontend. This is a simple demo of a common use-case.
 
-
+Let's start with a simple script I use to aggregate data from Spotify's API:
 
 {{<highlight python >}}
 import spotipy
@@ -20,16 +23,29 @@ def search_artist(name, mbid):
     name = '"' + name + '"'
 
     with open(os.devnull, 'w') as null:
-        # Silence spotipy's stdout
-        stdout = sys.stdout
+        # Silence spotipy's stdout...
         sys.stdout = null
         res = spotify.search(name, type="artist", limit=20)
-        sys.stdout = stdout
+	sys.stdout = sys.__stdout__
 
     with sqlite3.connect(dbfile) as conn:
         conn.execute("INSERT INTO artist (mbid, query, data) VALUES (?,?,?)", (mbid, name, json.dumps(res)))
         conn.commit()
 {{</highlight>}}
+
+I need to call `search_artist()` about 350000 times and I don't want to bother setting up multithreading, error handling and
+keeping the script up to date on an arbitrary server so let's integrate it in the tracker.
+
+My usual workflow is to create a project per script. I pushed the script to a [Gogs](https://gogs.io/) instance and created the project.
+This also works with Github/Gitea.
+{{< figure src="/tt/new_project.png" title="New task_tracker project">}}
+
+After the Webhook is setup, **task\_tracker** will stay in sync with the repository its workers will be made aware of the new changes
+instantly. This is not something we have to worry about since our **task_tracker_drone** takes care of deploying and updating the projects
+in real time with no additional configuration.
+
+{{< figure src="/tt/hook.png" title="Gogs webhook configuration">}}
+
 
 
 {{<highlight python >}}
@@ -70,7 +86,5 @@ print(json.dumps({
 
 
 
-{{< figure src="/tt/new_project.png" title="New task_tracker project">}}
 {{< figure src="/tt/secret.png" title="Project secret settings">}}
-{{< figure src="/tt/hook.png" title="Gogs webhook configuration">}}
 {{< figure src="/tt/perms.png" title="Private project require approval">}}
