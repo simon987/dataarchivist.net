@@ -36,6 +36,8 @@ def search_artist(name, mbid):
 I need to call `search_artist()` about 350000 times and I don't want to bother setting up multithreading, error handling and
 keeping the script up to date on an arbitrary server so let's integrate it in the tracker.
 
+## Configurating the task_tracker project
+
 My usual workflow is to create a project per script. I pushed the script to a [Gogs](https://gogs.io/) instance and created the project.
 This also works with Github/Gitea.
 {{< figure src="/tt/new_project.png" title="New task_tracker project">}}
@@ -46,7 +48,40 @@ in real time with no additional configuration.
 
 {{< figure src="/tt/hook.png" title="Gogs webhook configuration">}}
 
+The final configuration step is to set the *project secret*, which we will use to store authentication details.
+Only workers which we have given explicit `ASSIGN` permission will be able to read this information.
 
+{{< figure src="/tt/secret.png" title="Project secret settings">}}
+
+
+## Writing the worker script
+
+The way **task_tracker_drone** works is by passing the task object and project secret as command line arguments to the
+ executable file called `run` in the root of the git repository. It also expects a json
+ object telling it if the task was processed successfully, and if there are additionnal actions that needs to be executed:
+
+{{<highlight json >}}
+{
+  "result": 1,
+  "logs": [
+    {"message": "This is an 'ERROR' (level 3) message that will be saved in the tracker", "level": 3}
+  ],
+  "tasks": [
+    {
+      "project": 1,
+      "recipe": "This task will be submitted to the tracker",
+      "..."
+    },
+  ]
+}
+{{</highlight>}}
+*(See [LogLevel constants](https://github.com/simon987/task_tracker_drone/blob/master/src/tt_drone/api.py#L12))*
+
+
+This is what the body of the final worker script looks like:
+
+The program expects the task recipe and project secret as arguments, and it outputs the result object
+to stdout.
 
 {{<highlight python >}}
 try:
@@ -69,9 +104,9 @@ try:
 
 except Exception as e:
     print(json.dumps({
-		# Tell task_tracker that this task failed. It will be re-attempted later
+		# tell task_tracker that this task failed. it will be re-attempted later
         "result": 1,
-		# Send full stack trace. It will be available in the Logs page.
+		# send full stack trace. it will be available in the logs page.
         "logs": [
             {"message": str(e) + traceback.format_exc(), "level": 3}
         ]
@@ -85,6 +120,4 @@ print(json.dumps({
 
 
 
-
-{{< figure src="/tt/secret.png" title="Project secret settings">}}
 {{< figure src="/tt/perms.png" title="Private project require approval">}}
