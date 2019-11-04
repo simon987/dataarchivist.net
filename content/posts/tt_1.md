@@ -33,7 +33,7 @@ def search_artist(name, mbid):
         conn.commit()
 {{</highlight>}}
 
-I need to call `search_artist()` about 350000 times and I don't want to bother setting up multithreading, error handling and
+I need to call `search_artist()` about 350'000 times and I don't want to bother setting up multithreading, error handling and
 keeping the script up to date on an arbitrary server so let's integrate it in the tracker.
 
 ## Configurating the task_tracker project
@@ -60,6 +60,7 @@ The way **task_tracker_drone** works is by passing the task object and project s
  executable file called `run` in the root of the git repository. It also expects a json
  object telling it if the task was processed successfully, and if there are additionnal actions that needs to be executed:
 
+**Expected result in stdout**:
 {{<highlight json >}}
 {
   "result": 1,
@@ -80,7 +81,7 @@ The way **task_tracker_drone** works is by passing the task object and project s
 
 This is what the body of the final worker script looks like:
 
-The program expects the task recipe and project secret as arguments, and it outputs the result object
+The program receives the task recipe and project secret as arguments, and it outputs the result object
 to stdout.
 
 {{<highlight python >}}
@@ -119,5 +120,30 @@ print(json.dumps({
 {{</highlight>}}
 
 
+## Allocating worker machines
 
-{{< figure src="/tt/perms.png" title="Private project require approval">}}
+On the worker machines, you can execute the task runner and it will automatically start
+working on the available projects. Private projects require explicit explicit approval to start executing tasks:
+
+{{<highlight bash >}}
+git clone https://github.com/simon987/task_tracker_drone
+cd task_tracker_drone
+python -m pip install -r requirements.txt
+
+python ./src/drone.py "https://exemple-api-url.com/api" "worker alias"
+
+# Request access for 1 r={"ok":true}
+# Request access for 2 r={"ok":true}
+# Request access for 3 r={"ok":true}
+# Starting 10 working contexts
+# No tasks, waiting...
+{{</highlight>}}
+
+
+{{< figure src="/tt/perms.png" title="Private projects require approval">}}
+
+As soon as you give permission to the worker, it will automatically start executing tasks.
+When a task fails, it will be put back in the task queue up to `task["max_retries"]` times.
+The logs can be found on the web interface:
+
+{{< figure src="/tt/logs.png" title="Logs page">}}

@@ -34,7 +34,7 @@ for item, board in scanner.all_posts():
 ## Deduplication
 
 To avoid publishing the same item twice, the application keeps track of what items were visited in its **state**. 
-Items that have the same `last_modified`, `reply_count` or `timestamp` value as the state doesn't need to be visited again.
+Items that have the same `last_modified`, `reply_count` or `timestamp` value as the state don't need to be visited again.
 
 This deduplication step greatly reduces the amount of HTTP requests necessary to stay up to date, and more importantly,
 it enables the crawler to quickly resume where it left off in the case of a fault.

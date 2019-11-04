@@ -57,7 +57,7 @@ with `l.b.MD5_SECRET_KEY` as the salt.
 
 {{< figure src="/scrape/dev_tools3.png" title="MD5_SECRET_KEY hidden in plain sight">}}
 
-The secret code was hidden only a few keystrokes into the source. Now that we have all the puzzle pieces,
+The secret code was hidden only a few keystrokes away into the source. Now that we have all the puzzle pieces,
  let's hack together a simple Python script to automate the download process: 
 
 {{<highlight python "linenos=table,linenostart=18">}}
