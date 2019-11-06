@@ -2,6 +2,7 @@
 title: "Indexing your files with sist2"
 date: 2019-11-04T19:31:45-05:00
 draft: false
+tags: ["data curation", "misc"]
 author: simon987
 ---
 
