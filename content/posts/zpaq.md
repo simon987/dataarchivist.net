@@ -15,13 +15,15 @@ cd zpaq/
 g++ -Ofast -DNOJIT -Dunix zpaq.cpp libzpaq.cpp -pthread -o zpaq
 {{</highlight>}}
 
+Initial backup can take a while to complete, 
 {{<highlight _>}}
-## Initial backup can take a while to complete, 
 $ zpaq add "arc???" ./files/ -index local-index.zpaq
 0.000000 + (955.283380 -> 687.840444 -> 622.268166) = 622.268166 MB
 45.737 seconds (all OK)
+{{</highlight>}}
 
-## but subsequent ones are almost instantaneous if no files were changed
+But subsequent ones are almost instantaneous if no files were changed
+{{<highlight _>}}
 $ zpaq add "arc???" ./files/ -index local-index.zpaq
 0.000000 + (0.000000 -> 0.000000 -> 0.000104) = 0.000104 MB
 0.408 seconds (all OK)

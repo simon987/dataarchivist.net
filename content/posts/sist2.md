@@ -54,7 +54,7 @@ acts as an external CDN, or they can be served by sist2 directly from the disk. 
 Content is supported, meaning that `Range` requests are accepted and media files can be *'seeked'* from
 the browser.
 
-{{< figure src="/sist/sist_web.png" title="">}}
+{{< figure height="350px" src="/sist/sist_web.png" title="">}}
 
 The UI itself is not that much different from the original Python/Flask version, however, the Javascript
 client is a bit *thicker*, meaning that most operations that were originally handled by the Flask server,
