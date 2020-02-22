@@ -7,9 +7,9 @@ author: simon987
 ---
 
 I built a tool to simplify long-running scraping tasks processes. **task_tracker** is a simple job queue
-with a web frontend. This is a simple demo of a common use-case.
+with a web frontend. This is a quick demo of a common use-case.
 
-Let's start with a simple script I use to aggregate data from Spotify's API:
+Let's start with a short script I use to aggregate data from Spotify's API:
 
 {{<highlight python >}}
 import spotipy
@@ -28,10 +28,12 @@ def search_artist(name, mbid):
         res = spotify.search(name, type="artist", limit=20)
 	sys.stdout = sys.__stdout__
 
-    with sqlite3.connect(dbfile) as conn:
+    with psycopg2.connect(CONNSTR) as conn:
         conn.execute("INSERT INTO artist (mbid, query, data) VALUES (?,?,?)", (mbid, name, json.dumps(res)))
         conn.commit()
 {{</highlight>}}
+
+The `CONNSTR` variable is given 
 
 I need to call `search_artist()` about 350'000 times and I don't want to bother setting up multithreading, error handling and
 keeping the script up to date on an arbitrary server so let's integrate it in the tracker.
@@ -95,6 +97,7 @@ try:
 
     CLIENT_ID = secret["CLIENT_ID"]
     CLIENT_SECRET = secret["CLIENT_SECRET"]
+    DB = secret["DB"]
     client_credentials_manager = SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
     spotify = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 

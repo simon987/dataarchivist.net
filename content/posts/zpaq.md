@@ -2,6 +2,7 @@
 title: "Android phone backups with zpaq"
 date: 2019-11-05T13:16:27-05:00
 draft: true
+tags: ["backup"]
 author: simon987
 ---
 
